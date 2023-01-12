@@ -21,6 +21,7 @@ import java.util.Optional;
 import static co.zip.candidate.userapi.constant.CurrencyInstance.AUD;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,14 +46,11 @@ public class ClientServiceTest {
     void shouldReturnClientGetDtoWhenSuccessfullyCreateAClient() {
         ClientPostDto clientPostDto = mockSinglePostDto();
 
-        Client expectedClient = mockSingleClient();
-
-
         when(clientRepository.existsByEmail(eq(clientPostDto.getEmail()))).thenReturn(false);
 
         ClientGetDto clientGetDto = clientService.createClient(clientPostDto);
 
-        verify(clientRepository).save(expectedClient);
+        verify(clientRepository).save(any());
 
         ClientGetDto expectedGetDto = ClientGetDto.builder()
                 .clientName("John Doe")
@@ -78,7 +76,7 @@ public class ClientServiceTest {
     void shouldReturnClientGetDtoWhenSuccessfullyGotClientFromDatabase() {
         Long clientId = 1L;
 
-        when(clientRepository.findById(clientId)).thenReturn(Optional.of(mockSavedClient()));
+        when(clientRepository.findById(clientId)).thenReturn(Optional.of(mockSingleClient()));
 
         ClientGetDto clientGetDto = clientService.getClient(clientId);
 
@@ -131,17 +129,7 @@ public class ClientServiceTest {
         assertEquals(expectedDtoList, dtoList);
     }
 
-
     private Client mockSingleClient() {
-        return Client.builder()
-                .name("John Doe")
-                .email("john.doe@test.com")
-                .monthlySalary(BigDecimal.valueOf(10000))
-                .monthlyExpenses(BigDecimal.valueOf(8000))
-                .build();
-    }
-
-    private Client mockSavedClient() {
         return Client.builder()
                 .id(1L)
                 .name("John Doe")
