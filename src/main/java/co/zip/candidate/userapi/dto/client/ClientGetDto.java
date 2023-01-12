@@ -11,6 +11,7 @@ import java.util.Currency;
 public class ClientGetDto {
     Long id;
     String clientName;
+    String email;
     BigDecimal monthlySalary;
     BigDecimal monthlyExpenses;
     Currency currency;

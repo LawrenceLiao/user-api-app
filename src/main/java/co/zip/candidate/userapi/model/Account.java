@@ -37,7 +37,7 @@ public class Account {
     private Long id;
 
     @Column(unique = true, updatable = false, nullable = false)
-    private String accountNum;
+    private String accountNumber;
 
     @Builder.Default
     @Column(updatable = false, nullable = false)

@@ -1,6 +1,6 @@
 CREATE TABLE account (
     id BIGSERIAL PRIMARY KEY,
-    account_num VARCHAR(255) UNIQUE NOT NULL,
+    account_number VARCHAR(255) UNIQUE NOT NULL,
     currency CHAR(3) NOT NULL,
     total_credit NUMERIC(15,2) NOT NULL,
     available_credit NUMERIC(15,2) NOT NULL,

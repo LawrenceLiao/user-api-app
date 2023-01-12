@@ -3,6 +3,7 @@ package co.zip.candidate.userapi.controller;
 
 import co.zip.candidate.userapi.dto.error.ErrorDto;
 import co.zip.candidate.userapi.exception.DuplicateElementsException;
+import co.zip.candidate.userapi.exception.InsufficientMonthlySurplusException;
 import co.zip.candidate.userapi.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -14,6 +15,7 @@ import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.PRECONDITION_FAILED;
 import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 
 @Slf4j
@@ -34,6 +36,15 @@ public class ControllerExceptionHandler {
     public ErrorDto handleUserNotFoundException(UserNotFoundException ex) {
         return ErrorDto.builder()
                 .message("USER_NOT_FOUND")
+                .details(ex.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(InsufficientMonthlySurplusException.class)
+    @ResponseStatus(value = PRECONDITION_FAILED)
+    public ErrorDto handleInsufficientMonthlySurplusException(InsufficientMonthlySurplusException ex) {
+        return ErrorDto.builder()
+                .message("INSUFFICIENT_SURPLUS")
                 .details(ex.getMessage())
                 .build();
     }
