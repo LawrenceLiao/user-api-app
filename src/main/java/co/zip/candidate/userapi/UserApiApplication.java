@@ -2,10 +2,12 @@ package co.zip.candidate.userapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
+@EnableAspectJAutoProxy
 @SpringBootApplication
 public class UserApiApplication {
 
