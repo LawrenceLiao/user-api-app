@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Objects;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.PRECONDITION_FAILED;
@@ -50,7 +51,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
-    @ResponseStatus
+    @ResponseStatus(value = BAD_REQUEST)
     public ErrorDto handleValidationException(BindException ex) {
         log.info("Input argument is invalid", ex);
         return ErrorDto.builder()
