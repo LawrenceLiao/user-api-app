@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,7 +107,7 @@ public class ClientServiceTest {
 
         List<ClientGetDto> dtoList = clientService.getAllClients();
 
-        List<ClientGetDto> expectedDtoList = Arrays.asList(
+        List<ClientGetDto> expectedDtoList = List.of(
                 ClientGetDto.builder()
                         .id(1L)
                         .clientName("John Doe")
@@ -150,7 +149,7 @@ public class ClientServiceTest {
     }
 
     private List<Client> mockClientList() {
-        return Arrays.asList(
+        return List.of(
                 Client.builder()
                         .id(1L)
                         .name("John Doe")
