@@ -3,6 +3,7 @@ package co.zip.candidate.userapi.dictionary;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import static co.zip.candidate.userapi.constant.CurrencyInstance.AUD;
 
 @Component
 public class ThresholdDic {
-    private final Map<Currency, BigDecimal> thresholdMap = Map.of(
+    private final Map<Currency, BigDecimal> thresholdMap = Collections.singletonMap(
             AUD, BigDecimal.valueOf(1000)
     );
 
