@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@ActiveProfiles("Test")
+@ActiveProfiles("test")
 public class MonthlySurplusValidationAspectTest {
 
     static final Long CLIENT_ID = 1L;
