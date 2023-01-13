@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,7 +62,7 @@ public class AccountService {
 
     private String generateAccountNumber(Client client) {
         String separator = "-";
-        return StringUtils.join(List.of(client.getId(), client.getCurrency(), client.getAccounts().size()), separator);
+        return StringUtils.join(Arrays.asList(client.getId(), client.getCurrency(), client.getAccounts().size()), separator);
     }
 
     // I assume there is only one account for one currency with a client
