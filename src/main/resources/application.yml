@@ -6,24 +6,24 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: YourStrong@Passw0rd
+    url: ${DB_SERVER_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_USERNAME}
   flyway:
     enabled: true
-    url: jdbc:postgresql://localhost:5432/postgres
-    user: postgres
-    password: YourStrong@Passw0rd
+    url: ${DB_SERVER_URL}
+    user: ${DB_USERNAME}
+    password: ${DB_USERNAME}
   jpa:
     properties:
       hibernate:
-        default_schema: PUBLIC
+        default_schema: {DB_SCHEMA}
         jdbc:
           time_zone: UTC
-    show-sql: true
+    show-sql: false
 
 logging:
   pattern:
     dateFormat: yyyy-MM-dd HH:mm:ss.SSS ZZZ
   level:
-    co.zip.candidate.userapi: debug
+    co.zip.candidate.userapi: info
