@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -216,7 +217,7 @@ public class ClientControllerTest {
 
     @Test
     void shouldReturnClientListWhenRetrievingAllClients() throws Exception {
-        List<ClientGetDto> dtoList = List.of(
+        List<ClientGetDto> dtoList = Arrays.asList(
                 ClientGetDto.builder()
                         .id(1L)
                         .clientName("John Doe")

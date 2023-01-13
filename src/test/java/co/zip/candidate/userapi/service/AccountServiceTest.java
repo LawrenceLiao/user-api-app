@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import static co.zip.candidate.userapi.constant.CurrencyInstance.AUD;
@@ -89,7 +90,7 @@ public class AccountServiceTest {
                 .build();
 
         Client clientWithAccounts = client.toBuilder()
-                .accounts(List.of(account))
+                .accounts(Arrays.asList(account))
                 .build();
 
         when(clientService.retrieveClientById(CLIENT_ID)).thenReturn(clientWithAccounts);
@@ -107,7 +108,7 @@ public class AccountServiceTest {
                 .monthlyExpenses(BigDecimal.valueOf(74500))
                 .build();
 
-        List<Account> accounts = List.of(
+        List<Account> accounts = Arrays.asList(
                 Account.builder()
                         .accountNumber("1-AUD-0")
                         .currency(AUD)
@@ -128,7 +129,7 @@ public class AccountServiceTest {
 
         List<AccountGetDto> dtos = accountService.getAllAccounts();
 
-        List<AccountGetDto> expectedDtos = List.of(
+        List<AccountGetDto> expectedDtos = Arrays.asList(
                 AccountGetDto.builder()
                         .accountNumber("1-AUD-0")
                         .currency(AUD)
