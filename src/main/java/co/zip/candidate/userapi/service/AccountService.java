@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
@@ -54,7 +54,7 @@ public class AccountService {
     }
 
     public List<AccountGetDto> getAllAccounts() {
-        return accountRepository.findAll().stream()
+        return accountRepository.findByDeletedIsFalse().stream()
                 .map(accountMapper::fromEntity)
                 .collect(Collectors.toList());
     }
@@ -64,15 +64,19 @@ public class AccountService {
         return StringUtils.join(List.of(client.getId(), client.getCurrency(), client.getAccounts().size()), separator);
     }
 
-    // I assume there is only one account for one currency with a client
-    // e.g. A client only has one account with AUD and has to do validation beforehand
+    // I assume there is only one active account for one currency with a client
+    // e.g. A client only has one active account with AUD and has to do validation beforehand
     private void validateIfAccountForCurrencyExists(Client client) {
         client.getAccounts().stream()
-                .filter(account -> account.getCurrency() == client.getCurrency())
+                .filter(account -> isActiveDuplicateAccount(account, client.getCurrency()))
                 .findFirst()
                 .ifPresent(account -> {
                     log.info("Account for currency {} has already existed with client {}", client.getCurrency(), client.getId());
                     throw new DuplicateElementsException("Account for given currency has already been there with client");
                 });
+    }
+
+    private boolean isActiveDuplicateAccount(Account account, Currency currency) {
+        return !account.isDeleted() && account.getCurrency() == currency;
     }
 }

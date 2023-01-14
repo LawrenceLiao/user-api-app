@@ -1,6 +1,5 @@
 package co.zip.candidate.userapi.aop;
 
-import co.zip.candidate.userapi.dictionary.ThresholdDic;
 import co.zip.candidate.userapi.dto.account.AccountPostDto;
 import co.zip.candidate.userapi.exception.InsufficientMonthlySurplusException;
 import co.zip.candidate.userapi.model.Client;
@@ -24,15 +23,15 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
 public class MonthlySurplusValidationAspectTest {
 
-    static final Long CLIENT_ID = 1L;
+    private static final Long CLIENT_ID = 1L;
     @MockBean
-    ClientService clientService;
+    private ClientService clientService;
+
+//    @Autowired
+//    private ThresholdDic thresholdDic;
 
     @Autowired
-    ThresholdDic thresholdDic;
-
-    @Autowired
-    MonthlySurplusValidationAspect monthlySurplusValidationAspect;
+    private MonthlySurplusValidationAspect monthlySurplusValidationAspect;
 
     @Test
     void shouldDoNothingWhenSurplusIsGood() throws Throwable {

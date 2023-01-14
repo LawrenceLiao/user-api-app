@@ -31,9 +31,9 @@ public class AccountControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
     @MockBean
-    AccountService accountService;
+    private AccountService accountService;
 
     @Test
     void shouldReturnOkResponseWithAccountInfoWhenSuccessfullyCreatedOneAccount() throws Exception {

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,6 +25,7 @@ import java.util.List;
 import static co.zip.candidate.userapi.constant.CurrencyInstance.AUD;
 
 @Getter
+@Setter
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,11 +47,15 @@ public class Client {
     @Builder.Default
     @Column(nullable = false)
     private Currency currency = AUD;
+
     @Column(nullable = false)
     private BigDecimal monthlySalary;
 
     @Column(nullable = false)
     private BigDecimal monthlyExpenses;
+
+    @Column(nullable = false)
+    private boolean deleted;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

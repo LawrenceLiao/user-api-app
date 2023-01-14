@@ -28,18 +28,18 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class AccountServiceTest {
 
-    static final Long CLIENT_ID = 1L;
+    private static final Long CLIENT_ID = 1L;
     @Mock
-    ClientService clientService;
+    private ClientService clientService;
     @Mock
-    AccountRepository accountRepository;
-    AccountMapper accountMapper;
-    ThresholdDic thresholdDic;
-    AccountService accountService;
+    private AccountRepository accountRepository;
+    private AccountMapper accountMapper;
+    private ThresholdDic thresholdDic;
+    private AccountService accountService;
 
-    AccountPostDto accountPostDto;
+    private AccountPostDto accountPostDto;
 
-    Client client;
+    private Client client;
 
     @BeforeEach
     void setUp() {
@@ -124,7 +124,7 @@ public class AccountServiceTest {
                         .build()
         );
 
-        when(accountRepository.findAll()).thenReturn(accounts);
+        when(accountRepository.findByDeletedIsFalse()).thenReturn(accounts);
 
         List<AccountGetDto> dtos = accountService.getAllAccounts();
 

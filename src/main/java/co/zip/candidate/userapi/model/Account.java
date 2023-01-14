@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,7 +23,8 @@ import java.util.Currency;
 import static co.zip.candidate.userapi.constant.CurrencyInstance.AUD;
 
 @Getter
-@Builder
+@Setter
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -46,6 +48,9 @@ public class Account {
 
     @Column(nullable = false)
     private BigDecimal availableCredit;
+
+    @Column(nullable = false)
+    private boolean deleted;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

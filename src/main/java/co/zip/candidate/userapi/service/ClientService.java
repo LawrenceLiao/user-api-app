@@ -10,8 +10,8 @@ import co.zip.candidate.userapi.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +39,7 @@ public class ClientService {
     }
 
     public List<ClientGetDto> getAllClients() {
-        return clientRepository.findAll().stream()
+        return clientRepository.findByDeletedIsFalse().stream()
                 .map(clientMapper::fromEntity)
                 .collect(Collectors.toList());
     }
@@ -52,10 +52,10 @@ public class ClientService {
     }
 
     public Client retrieveClientById(Long id) {
-        return clientRepository.findById(id)
+        return clientRepository.findByIdAndDeletedIsFalse(id)
                 .orElseThrow(() -> {
-                    log.info("No client with id {} found", id);
-                    return new UserNotFoundException("No client with ID given exists");
+                    log.info("No active client with id {} found", id);
+                    return new UserNotFoundException("No active client with ID given exists");
                 });
     }
 }

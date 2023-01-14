@@ -30,11 +30,11 @@ import static org.mockito.Mockito.when;
 public class ClientServiceTest {
 
     @Mock
-    ClientRepository clientRepository;
+    private ClientRepository clientRepository;
 
-    ClientService clientService;
+    private ClientService clientService;
 
-    ClientMapper clientMapper;
+    private ClientMapper clientMapper;
 
     @BeforeEach
     void setUp() {
@@ -76,7 +76,7 @@ public class ClientServiceTest {
     void shouldReturnClientGetDtoWhenSuccessfullyGotClientFromDatabase() {
         Long clientId = 1L;
 
-        when(clientRepository.findById(clientId)).thenReturn(Optional.of(mockSingleClient()));
+        when(clientRepository.findByIdAndDeletedIsFalse(clientId)).thenReturn(Optional.of(mockSingleClient()));
 
         ClientGetDto clientGetDto = clientService.getClient(clientId);
 
@@ -96,14 +96,14 @@ public class ClientServiceTest {
     void shouldThrowUserNotFoundExceptionWhenThereIsNoClientWithIdGiven() {
         Long clientId = 1L;
 
-        when(clientRepository.findById(clientId)).thenReturn(Optional.empty());
+        when(clientRepository.findByIdAndDeletedIsFalse(clientId)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> clientService.getClient(clientId));
     }
 
     @Test
     void shouldReturnClientGetDtoListWhenRetrievingAllClients() {
-        when(clientRepository.findAll()).thenReturn(mockClientList());
+        when(clientRepository.findByDeletedIsFalse()).thenReturn(mockClientList());
 
         List<ClientGetDto> dtoList = clientService.getAllClients();
 
