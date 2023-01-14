@@ -46,7 +46,7 @@ public class ClientServiceTest {
     void shouldReturnClientGetDtoWhenSuccessfullyCreateAClient() {
         ClientPostDto clientPostDto = mockSinglePostDto();
 
-        when(clientRepository.existsByEmail(eq(clientPostDto.getEmail()))).thenReturn(false);
+        when(clientRepository.existsByEmailAndDeletedIsFalse(eq(clientPostDto.getEmail()))).thenReturn(false);
 
         ClientGetDto clientGetDto = clientService.createClient(clientPostDto);
 
@@ -67,7 +67,7 @@ public class ClientServiceTest {
     void shouldThrowDuplicateElementExceptionWhenEmailAlreadyExisted() {
         ClientPostDto clientPostDto = mockSinglePostDto();
 
-        when(clientRepository.existsByEmail(eq(clientPostDto.getEmail()))).thenReturn(true);
+        when(clientRepository.existsByEmailAndDeletedIsFalse(eq(clientPostDto.getEmail()))).thenReturn(true);
 
         assertThrows(DuplicateElementsException.class, () -> clientService.createClient(clientPostDto));
     }

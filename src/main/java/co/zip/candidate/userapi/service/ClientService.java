@@ -45,7 +45,7 @@ public class ClientService {
     }
 
     private void validateEmailIfExists(String email) {
-        if (clientRepository.existsByEmail(email)) {
+        if (clientRepository.existsByEmailAndDeletedIsFalse(email)) {
             log.info("Duplicate email encountered which is {}", email);
             throw new DuplicateElementsException("The email has been used by another client");
         }

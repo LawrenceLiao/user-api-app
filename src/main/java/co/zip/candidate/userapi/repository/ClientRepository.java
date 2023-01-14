@@ -14,5 +14,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     List<Client> findByDeletedIsFalse();
 
-    boolean existsByEmail(String email);
+    boolean existsByEmailAndDeletedIsFalse(String email);
 }

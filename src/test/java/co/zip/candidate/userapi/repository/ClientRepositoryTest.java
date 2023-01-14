@@ -34,6 +34,7 @@ public class ClientRepositoryTest {
                 .email(EMAIL)
                 .monthlySalary(BigDecimal.valueOf(10000))
                 .monthlyExpenses(BigDecimal.valueOf(8000))
+                .deleted(false)
                 .build();
         clientRepository.save(client);
     }
@@ -49,7 +50,20 @@ public class ClientRepositoryTest {
         assertNotNull(client.getCreatedAt());
         assertNotNull(client.getUpdatedAt());
 
-        assertTrue(clientRepository.existsByEmail(EMAIL));
+        assertTrue(clientRepository.existsByEmailAndDeletedIsFalse(EMAIL));
+    }
+
+    @Test
+    void shouldReturnFalseWhenEmailGivenDoesNotExist() {
+        String wrongEmail = "wrong@test.com";
+        assertFalse(clientRepository.existsByEmailAndDeletedIsFalse(wrongEmail));
+    }
+
+    @Transactional
+    @Test
+    void shouldReturnFalseWhenEmailGivenExistsButClientIsDeleted() {
+        client.setDeleted(true);
+        assertFalse(clientRepository.existsByEmailAndDeletedIsFalse(EMAIL));
     }
 
     @Test
