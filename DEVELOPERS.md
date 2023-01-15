@@ -2,6 +2,7 @@
 
 ## Tech Stack
 * Java 11
+* Gradle
 * SpringBoot
 * Docker
 * Docker compose
@@ -13,6 +14,7 @@
 * Mockito
 * MockMvc
 * Flyway
+* Make
 
 ### This is a SpringBoot based User RESTful API service, it currently supports the below functions:
 * Create a new Client
@@ -22,56 +24,52 @@
 * List all Accounts
 
 ## Database
-#### PostgreSQL is being applied here, and we are also using Docker Compose to make local development convenient
+### PostgreSQL is being applied here, and we are also using Docker Compose to make local development convenient
 * When running for the first time, initialise the Docker dependencies using the below make target:
   ```shell
-  docker-compose up -d
+  make app_local_compose_up
   ```
 * Afterwards, Docker dependencies can be started using the below target:
   ```shell
-  docker-compose start
+  make app_local_compose_start
   ```
 * To stop the Docker dependencies and **keep data**, run the below target:
   ```shell
-  docker-compose stop
+  make app_local_compose_stop
   ```
 * To completely tear-down the Docker dependencies, run:
   ```shell
-  docker-compose down
+  make app_local_compose_down
   ```
 
 ## Building
 * Run the below command under the root directory
   ```shell
-  ./gradlew clean build 
+  make app_local_build 
   ```
+  
 ## Unit Testing
 * Run unit tests by using the command shown
   ```shell
-  ./gradlew clean test
+  make app_local_test
   ```
 
 ## Running
+* Have PostgresSQL up and running by docker-compose before running the application
 * A private Spring profile can be used to __override__ the Spring properties specific to your local environment:
   ```
   src/main/resources/application-local.yml
   ```
-* There are two ways to run the application locally:
-
-  1. Run below command under root directory regardless of the build process has been executed or not
-     ```shell
-     ./gradlew bootRun --args="--spring.profiles.active=local"
-     ```
-  2. Execute this command strictly after build process mentioned above is done
-     ```shell
-     java -jar -Dspring.profiles.active=local ./build/libs/userapi-0.0.1-SNAPSHOT.jar
-     ```
+* Run the application by typing below command:
+  ```shell
+  make app_local_run
+  ```
 
 ## Deploying
 * Dcokerize the application and deploy docker image anywhere needed
 * Run below command to build docker image as per Dockerfile
   ```shell
-  docker build . --tag userapi:snapshot
+  make app_docker_build
   ```
 * Deploy docker image with variable injection to meet requirements of various environments
 
@@ -86,6 +84,7 @@
 * Docker compose has been used in local to easily set up the local environment.
 * Dockerfile put application files into docker instead of using fat jar.
 * High test coverage ensures robustness of the application
+* Makefile centrally manages complex commands to make developers's lives easier
 
 ## Additional Information
 * Please find the postman collection file in **postman** folder and import into your postman to check more details for existing endpoints. Also,don't forget update the collections if there is any update.
